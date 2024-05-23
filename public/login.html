@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/sessao.js"></script>
+    <link rel="stylesheet" href="./css/login.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="login-container">
+        <header class="cabecalho">
+            <section class="sessao-logo">
+                <img src="./assets/logo_pequena.png" class="logo-pequena" alt="logo">
+                <span class="logo-nome">SAURIDEOS</span>
+            </section>
+            <section class="sessao-botoes">
+                <button class="botao-cabecalho">Inicio</button>
+                <button class="botao-cabecalho">Parque</button>
+                <button class="botao-cabecalho">Instituição</button>
+            </section>
+            <section class="sessao-cadastro-login">
+                <button class="botao-cabecalho">Entrar</button>
+                <button class="botao-cabecalho">Cadastrar</button>
+            </section>
+        </header>
+        <div class="conteudo-login">
+            <section class="caixa-login">
+                <h2>ENTRAR</h2>
+                <div class="caixa-inputs">
+                    <span>E-mail</span>
+                    <input type="email" id="input_email" class="input" placeholder="Digite seu e-mail">
+                    <span class="msg-erro" id="erro_email">erro</span>
+                    <span>Senha</span>
+                    <input type="password" id="input_senha" class="input" placeholder="Digite sua senha">
+                </div>
+                <span class="msg-erro" id="erro_geral">erro</span>
+                <button class="botao-entrar" onclick="entrar()">ENTRAR</button>
+                <span>Não possui conta?</span>
+                <span class="link-cadastre-se">Cadastre-se</span>
+            </section>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    function entrar() {
+        var emailVar = input_email.value;
+        var senhaVar = input_senha.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            erro_geral.style.color = "red"
+            erro_geral.innerHTML = "Por favor, preencha todos os campos!";
+
+            return false;
+        } else if(emailVar.indexOf('@') == -1){
+            erro_email.style.color = "red";
+            erro_email.innerHTML = "E-mail inválido";
+
+            return false;
+        }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+
+                    setTimeout(function () {
+                        window.location = "./versaoCliente/home.html";
+                    }, 1000); // apenas para exibir o loading
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+                erro_geral.style.color = "red";
+                erro_geral.innerHTML = "Houve um erro ao tentar realizar o login!";
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    erro_geral.innerHTML = texto; 
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+</script>

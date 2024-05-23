@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./js/sessao.js"></script>
+  <link rel="stylesheet" href="./css/cadastro.css">
+  <title>Cadastro</title>
+</head>
+
+<body>
+  <div class="cadastro-container">
+    <header class="cabecalho">
+      <section class="sessao-logo">
+        <img src="./assets/logo_pequena.png" class="logo-pequena" alt="logo">
+        <span class="logo-nome">SAURIDEOS</span>
+      </section>
+      <section class="sessao-botoes">
+        <button class="botao-cabecalho">Inicio</button>
+        <button class="botao-cabecalho">Parque</button>
+        <button class="botao-cabecalho">Instituição</button>
+      </section>
+      <section class="sessao-cadastro-login">
+        <button class="botao-cabecalho">Entrar</button>
+        <button class="botao-cabecalho">Cadastrar</button>
+      </section>
+    </header>
+    <div class="conteudo-cadastro">
+      <section class="caixa-cadastro">
+        <h2>CADASTRAR</h2>
+        <div class="caixa-auxiliar-inputs">
+          <aside class="inputs-esquerda">
+            <span>Nome</span>
+            <input id="input_nome" class="input" placeholder="Digite seu nome">
+            <span class="msg-erro" id="erro_nome">erro</span>
+            <span>E-mail</span>
+            <input type="email" id="input_email" class="input" placeholder="Digite seu e-mail">
+            <span class="msg-erro" id="erro_email">erro</span>
+          </aside>
+          <aside class="inputs-direita">
+            <span>Senha</span>
+            <input type="password" id="input_senha" class="input" placeholder="Digite sua senha">
+            <span class="msg-erro" id="erro_senha">erro</span>
+            <span>Confirme sua senha</span>
+            <input type="password" id="input_confirmacao" class="input" placeholder="Digite sua senha novamente">
+            <span class="msg-erro" id="erro_confirmacao">erro</span>
+          </aside>
+        </div>
+        <span class="msg-erro" id="msg_erro_geral">erro</span>
+        <button onclick="cadastrar()" class="botao-cadastro">Cadastrar</button>
+      </section>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
+<script>
+  function cadastrar() {
+    // aguardar();
+
+    //Recupere o valor da nova input pelo nome do id
+    // Agora vá para o método fetch logo abaixo
+    var nomeVar = input_nome.value;
+    var emailVar = input_email.value;
+    var senhaVar = input_senha.value;
+    var confimacaoVar = input_confirmacao.value;
+
+    let temNumero = false;
+
+    for(let numero = 0; numero <= 9; numero++){
+      if(senhaVar.indexOf(numero) != -1){
+        console.log(senhaVar.indexOf(numero));
+        temNumero = true;
+      }
+    }
+
+    if (
+      nomeVar == "" ||
+      emailVar == "" ||
+      senhaVar == "" ||
+      confimacaoVar == ""
+    ) {
+      msg_erro_geral.style.color = "red";
+      msg_erro_geral.innerHTML = "Por favor, preencha todos os campos!";
+
+      // finalizarAguardar();
+      return false;
+    } else if(nomeVar.length < 3){
+      erro_nome.style.color = "red";
+      erro_nome.innerHTML = "Nome inválido!";
+
+      // finalizarAguardar();
+      return false;
+    } else if(emailVar.indexOf('@') == -1){
+      erro_email.style.color = "red";
+      erro_email.innerHTML = "E-mail inválido";
+
+      return false;
+    } else if(temNumero == false || senhaVar.length < 8){
+      erro_senha.style.color = "red";
+      erro_senha.innerHTML = "Senha deve conter número e pelo menos 8 caracteres!";
+
+      return false;
+    } else if(senhaVar != confimacaoVar){
+      erro_confirmacao.style.color = "red";
+      erro_confirmacao.innerHTML = "Senhas não conferem";
+      
+      return false;
+    }
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        nomeServer: nomeVar,
+        emailServer: emailVar,
+        senhaServer: senhaVar,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          msg_erro_geral.style.color = '#1351F1'
+          msg_erro_geral.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+          limparFormulario();
+          // finalizarAguardar();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        // finalizarAguardar();
+      });
+
+    return false;
+  }
+</script>
