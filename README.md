@@ -1,2 +1,2 @@
 # Saurideos
-Projeto individual sauridios
+Projeto individual Saurideos
