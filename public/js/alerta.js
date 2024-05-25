@@ -118,7 +118,7 @@ function transformarEmDiv({ idAquario, temp, grauDeAviso, grauDeAvisoCor }) {
 }
 
 function atualizacaoPeriodica() {
-    JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
+    JSON.parse(sessionStorage.USUARIO).forEach(item => {
         obterdados(item.id)
     });
     setTimeout(atualizacaoPeriodica, 5000);

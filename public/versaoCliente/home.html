@@ -12,15 +12,15 @@
     <title>Home</title>
 </head>
 
-<body onload="validarSessao(), atualizacaoPeriodica()">
+<body onload="validarSessao()">
     <div class="home-container">
         <aside class="menu-lateral">
             <section class="sessao-botoes-superiores">
                 <img src="../assets/logo_pequena.png" alt="logo" class="logo-menu">
                 <button class="botao-menu">
-                    <span class="material-symbols-outlined">Home</span>
+                    <span class="material-symbols-outlined icone-casa">Home</span>
                 </button>
-                <button class="botao-menu">
+                <button class="botao-menu" onclick="navegar('./dashboardCli.html')">
                     <span class="material-symbols-outlined">Genetics</span>
                 </button>
                 <button class="botao-menu">
@@ -39,7 +39,7 @@
         <aside class="conteudo-home">
             <header class="cabecalho">
                 <div class="caixa-saudacao">
-                    <h1>Olá <span id="nome_usuario">Usuário</span>!</h1>
+                    <h1 class="saudacao">Olá <span id="nome_usuario">Usuário</span>!</h1>
                 </div>
             </header>
             <div class="conteudo">
@@ -53,7 +53,7 @@
                     </div>
                     <div class="caixa-input">
                         <input id="input_mensagem" class="input" placeholder="Escrever mensagem">
-                        <button class="botao-enviar-msg" onclick="enviarMensagem(input_mensagem.value)">
+                        <button class="botao-enviar-msg" onclick="enviarMensagem()">
                             <span class="material-symbols-outlined">Send</span>
                         </button>
                     </div>
@@ -65,9 +65,12 @@
                         <p id="nome_usuario"></p>
                         <p>E-MAIL:</p>
                         <p id="email_usuario"></p>
-                        <p>Quantidade de ingressos</p>
-                        <p></p>
+                        <p>QUANTIDADE DE INGRESSOS</p>
+                        <p>1</p>
+                        <p>DINOSSAURO FAVORITO</p>
+                        <P>T-rex</P>
                     </div>
+                    <button class="botao-alterar">ALTERAR</button>
                 </section>
             </div>
         </aside>
@@ -76,12 +79,24 @@
 
 </html>
 <script>
-    function enviarMensagem(mensagem) {
-        blog.innerHTML += `
+    function navegar(tela){
+        window.location = tela;
+    }
+
+    function enviarMensagem() {
+        mensagem = input_mensagem.value;
+
+        if (mensagem == '') {
+            alert('Digite alguma coisa!');
+        } else {
+            blog.innerHTML += `
         <div class="mensagem-digitada">
             <h3 class="nome-usuario-msg" id="nome_usuario">Usuário</h3>
             <p class="conteudo-msg-digitada">${mensagem}</p>
         </div>
         `;
+        }
+
+        input_mensagem.value = '';
     }
 </script>
