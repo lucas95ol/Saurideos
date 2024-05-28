@@ -12,10 +12,11 @@
     <title>Home</title>
 </head>
 
-<body onload="validarSessao()">
+<body onload="validarSessao(), listarPublicacao()">
     <div class="home-container">
         <aside class="menu-lateral">
             <section class="sessao-botoes-superiores">
+
                 <img src="../assets/logo_pequena.png" alt="logo" class="logo-menu">
                 <button class="botao-menu">
                     <span class="material-symbols-outlined icone-casa">Home</span>
@@ -62,7 +63,7 @@
                     <h1>SOBRE VOCÊ</h1>
                     <div class="caixa-informacoes">
                         <p>NOME:</p>
-                        <p id="nome_usuario"></p>
+                        <p id="nome_usuario_card"></p>
                         <p>E-MAIL:</p>
                         <p id="email_usuario"></p>
                         <p>QUANTIDADE DE INGRESSOS</p>
@@ -79,23 +80,75 @@
 
 </html>
 <script>
-    function navegar(tela){
+    var idUsuario = sessionStorage.ID_USUARIO;
+    var nomeUsuario = sessionStorage.NOME_USUARIO;
+
+    function navegar(tela) {
         window.location = tela;
     }
 
+    function listarPublicacao() {
+        fetch("/publicacao/listarPublicacao", {
+            method: "GET",
+        }).then(function (resposta) {
+            resposta.json().then((publicacao) => {
+                publicacao.forEach((publicacao) => {
+
+                    blog.innerHTML += `
+                        <div class="mensagem">
+                            <h3 class="nome-usuario-msg">${publicacao.nomeUsuario}</h3>
+                            <p class="conteudo-msg">${publicacao.conteudo}</p>
+                        </div>
+                    `;
+                }).catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+            }
+            )
+        })
+    }
+
     function enviarMensagem() {
-        mensagem = input_mensagem.value;
+        let mensagem = input_mensagem.value;
 
         if (mensagem == '') {
             alert('Digite alguma coisa!');
+
+            return false;
         } else {
             blog.innerHTML += `
         <div class="mensagem-digitada">
-            <h3 class="nome-usuario-msg" id="nome_usuario">Usuário</h3>
+            <h3 class="nome-usuario-msg">${nomeUsuario}</h3>
             <p class="conteudo-msg-digitada">${mensagem}</p>
         </div>
         `;
         }
+
+        fetch("/publicacao/publicar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                conteudoServer: mensagem,
+                idUsuarioServer: idUsuario,
+            }),
+        }).then(function (resposta) {
+
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                window.alert("Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!");
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+        return false;
 
         input_mensagem.value = '';
     }

@@ -4,11 +4,13 @@ function validarSessao() {
     var nome = sessionStorage.NOME_USUARIO;
 
     var nome_usuario = document.getElementById("nome_usuario");
+    var nome_usuario_card = document.getElementById("nome_usuario_card");
     var email_usuario = document.getElementById("email_usuario");
     
 
     if (email != null && nome != null) {
         nome_usuario.innerHTML = nome;
+        nome_usuario_card.innerHTML = nome;
         email_usuario.innerHTML = email;
     } else {
         window.location = "../login.html";

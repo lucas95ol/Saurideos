@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="../css/contato.css">
     <title>Contato</title>
 </head>
 <body>
-    
+    <div class="contato-container">
+        <aside class="menu-lateral">
+            <section class="sessao-botoes-superiores">
+                <img src="../assets/logo_pequena.png" alt="logo" class="logo-menu">
+                <button class="botao-menu">
+                    <span class="material-symbols-outlined">Home</span>
+                </button>
+                <button class="botao-menu" onclick="navegar('./dashboardCli.html')">
+                    <span class="material-symbols-outlined">Genetics</span>
+                </button>
+                <button class="botao-menu">
+                    <span class="material-symbols-outlined">Shop</span>
+                </button>
+                <button class="botao-menu">
+                    <span class="material-symbols-outlined icone-contato">Perm_Phone_Msg</span>
+                </button>
+            </section>
+            <section class="sessao-botao-inferior">
+                <button class="botao-menu" onclick="limparSessao()">
+                    <span class="material-symbols-outlined">Logout</span>
+                </button>
+            </section>
+        </aside>
+        <aside class="conteudo-contato">
+            <div class="caixa-contato">
+                <h1>CONTATE-NOS</h1>
+                <section class="sessao-assunto">
+                    <h2>ASSUNTO</h2>
+                    <input id="input_assunto" class="input-assunto" placeholder="Digite o assunto">
+                </section>
+                <section class="sessao-mensagem">
+                    <h2>MENSAGEM</h2>
+                    <textarea id="input_mensagem" class="input-mensagem" placeholder="Digite sua mensagem"></textarea>
+                </section>
+                <button class="botao-enviar">ENVIAR</button>
+            </div>
+        </aside>
+    </div>
 </body>
 </html>
