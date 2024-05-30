@@ -46,12 +46,7 @@
             <div class="conteudo">
                 <section class="sessao-blog">
                     <h1>BLOG</h1>
-                    <div class="caixa-mensagem" id="blog">
-                        <div class="mensagem">
-                            <h3 class="nome-usuario-msg">Lucas Oliveira</h3>
-                            <p class="conteudo-msg">Gostei do parque</p>
-                        </div>
-                    </div>
+                    <div class="caixa-mensagem" id="blog"></div>
                     <div class="caixa-input">
                         <input id="input_mensagem" class="input" placeholder="Escrever mensagem">
                         <button class="botao-enviar-msg" onclick="enviarMensagem()">
@@ -80,26 +75,39 @@
 
 </html>
 <script>
-    var idUsuario = sessionStorage.ID_USUARIO;
     var nomeUsuario = sessionStorage.NOME_USUARIO;
+    var emailUsuario = sessionStorage.EMAIL_USUARIO;
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    console.log(idUsuario)
 
     function navegar(tela) {
         window.location = tela;
     }
 
     function listarPublicacao() {
+
         fetch("/publicacao/listarPublicacao", {
             method: "GET",
         }).then(function (resposta) {
             resposta.json().then((publicacao) => {
                 publicacao.forEach((publicacao) => {
 
-                    blog.innerHTML += `
+                    if (publicacao.nomeUsuario == nomeUsuario) {
+                        blog.innerHTML += `
+                        <div class="mensagem-digitada">
+                            <h3 class="nome-usuario-msg">${nomeUsuario}</h3>
+                            <p class="conteudo-msg-digitada">${publicacao.conteudo}</p>
+                        </div>
+                        `;
+                    } else {
+                        blog.innerHTML += `
                         <div class="mensagem">
                             <h3 class="nome-usuario-msg">${publicacao.nomeUsuario}</h3>
                             <p class="conteudo-msg">${publicacao.conteudo}</p>
                         </div>
                     `;
+                    }
                 }).catch(function (resposta) {
                     console.log(`#ERRO: ${resposta}`);
                 });
@@ -111,34 +119,29 @@
     function enviarMensagem() {
         let mensagem = input_mensagem.value;
 
+        var corpo = {
+            conteudo: mensagem,
+            fkUsuario: idUsuario
+        }
+
         if (mensagem == '') {
             alert('Digite alguma coisa!');
 
             return false;
-        } else {
-            blog.innerHTML += `
-        <div class="mensagem-digitada">
-            <h3 class="nome-usuario-msg">${nomeUsuario}</h3>
-            <p class="conteudo-msg-digitada">${mensagem}</p>
-        </div>
-        `;
         }
 
-        fetch("/publicacao/publicar", {
-            method: "POST",
+        fetch(`/publicacao/publicar`, {
+            method: "post",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                conteudoServer: mensagem,
-                idUsuarioServer: idUsuario,
-            }),
+            body: JSON.stringify(corpo)
         }).then(function (resposta) {
 
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
-                window.alert("Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!");
+                listarPublicacao();
             } else if (resposta.status == 404) {
                 window.alert("Deu 404!");
             } else {

@@ -10,10 +10,10 @@ function listarPublicacao() {
     return database.executar(instrucaoSql);
 }
 
-function publicar(conteudo, idUsuario){
+function publicar(conteudo, fkUsuario){
     var instrucaoSql = `
         INSERT INTO Publicacao (conteudo, dtHorarioPublicacao, fkUsuario) VALUES
-        (${conteudo}, now(), ${idUsuario}); 
+        ('${conteudo}', now(), ${fkUsuario}); 
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);

@@ -15,15 +15,13 @@ function listarPublicacao(req, res) {
 }
 
 function publicar(req, res) {
-  var conteudo = req.body.conteudoServer;
-  var idUsuario = req.body.idUsuarioServer;
+  var conteudo = req.body.conteudo;
+  var fkUsuario = req.body.fkUsuario;
 
   if (conteudo == undefined) {
     res.status(400).send("Seu conteudo está undefined!");
-  } else if (idUsuario == undefined) {
-    res.status(400).send("Seu idUsuario está undefined!");
   } else {
-    publicacaoModel.publicar(conteudo, idUsuario)
+    publicacaoModel.publicar(conteudo, fkUsuario)
       .then(
         function (resultado) {
           res.json(resultado);
