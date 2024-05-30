@@ -7,5 +7,9 @@ router.get("/listarEspecie", function (req, res){
     especieController.listarEspecie(req, res);
 });
 
+router.post("/cadastrarEspecie", function(req, res){
+    especieController.cadastrarEspecie(req, res);
+});
+
 
 module.exports = router;

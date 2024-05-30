@@ -1,0 +1,249 @@
+* {
+    /*Espaçamento*/
+    margin: 0px;
+    padding: 0px;
+    /*Detalhes*/
+    overflow: hidden;
+}
+
+.material-symbols-outlined {
+    font-size: 35px;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.especie-container {
+    /*Tamanho*/
+    width: 100vw;
+    height: 100vh;
+    /*Organização de elementos filhos*/
+    display: flex;
+}
+
+.menu-lateral {
+    /*Tamanho*/
+    width: 5%;
+    height: 100%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /*Borda*/
+    border-right: 2px solid #000;
+}
+
+.sessao-botoes-superiores {
+    /*Tamanho*/
+    width: 100%;
+    height: 60%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sessao-botao-inferior {
+    /*Tamanho*/
+    width: 100%;
+    height: 10%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: center;
+}
+
+.botao-menu {
+    /*Tamanho*/
+    width: 100%;
+    height: 50px;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Borda*/
+    border: none;
+    /*Cor*/
+    background-color: transparent;
+    /*Detalhes*/
+    cursor: pointer;
+}
+
+.botao-menu:hover,
+.icone-dna {
+    /*Cor*/
+    color: #1351F1;
+}
+
+.conteudo-dashboardCli {
+    /*Tamanho*/
+    width: 95%;
+    height: 100%;
+    /*Organização de elementos filhos*/
+    display: flex;
+}
+
+.conteudo-esquerdo,
+.conteudo-direito {
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.conteudo-esquerdo {
+    /*Tamanho*/
+    width: 70%;
+}
+
+.cabecalho-esquerdo {
+    /*Tamanho*/
+    width: 98%;
+    height: 13%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*Borda*/
+    border: 2px solid #1351F1;
+    border-radius: 20px;
+    /*Cor*/
+    color: #1351F1;
+    /*Fonte*/
+    font-size: 20px;
+}
+
+.caixa-lista-dino {
+    /*Tamanho*/
+    width: 98%;
+    height: 83%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    /*Borda*/
+    border: 2px solid #1351F1;
+    border-radius: 20px;
+}
+
+.lista-dino{
+    /*Tamanho*/
+    width: 100%;
+    height: 80%;
+    /*Borda*/
+    border: 2px solid #000;
+}
+
+.botao-add-especie{
+    /*Tamanho*/
+    width: 98%;
+    height: 10%;
+    /*Borda*/
+    border: 2px solid #000;
+    border-radius: 10px;
+    /*Cor*/
+    background-color: #1351F1;
+    color: #FFF;
+    /*Fonte*/
+    font-size: 18px;
+    /*Detalhes*/
+    cursor: pointer;
+}
+
+.titulo-tabela,
+.card-dino{
+    /*Tamanho*/
+    width: 100%;
+    height: 40px;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.titulos,
+.dado-dino{
+    /*Tamanho*/
+    width: 24%;
+    /*Cor*/
+    color: #1351F1;
+    /*Texto*/
+    text-align: center;
+}
+
+
+.dado-dino{
+    /*Cor*/
+    color: #000;
+}
+
+.conteudo-direito {
+    /*Tamanho*/
+    width: 30%;
+}
+
+.cabecalho-direito {
+    /*Tamanho*/
+    width: 98%;
+    height: 29%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    /*Borda*/
+    border: 2px solid #1351F1;
+    border-radius: 20px;
+}
+
+.conteudo-curiosidade{
+    /*Tamanho*/
+    width: 90%;
+    height: 40%;
+    /*Texto*/
+    text-align: center;
+}
+
+.titulo-curiosidade,
+.titulo-grafico{
+    /*Cor*/
+    color: #1351F1;
+    /*Fonte*/
+    font-size: 20px;
+}
+
+.caixa-grafico {
+    /*Tamanho*/
+    width: 98%;
+    height: 67%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    /*Borda*/
+    border: 2px solid #1351F1;
+    border-radius: 20px;
+}
+
+.caixa-cadastro-dino{
+    /*Tamanho*/
+    width: 50%;
+    height: 90%;
+    /*Posição*/
+    position: absolute;
+    /*Espaçamento*/
+    margin-top: 1%;
+    margin-left: 20%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    /*Borda*/
+    border: 2px solid #000;
+    border-radius: 10px;
+    /*Cor*/
+    background-color: #FFF;
+}

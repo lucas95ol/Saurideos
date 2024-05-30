@@ -7,12 +7,25 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="../css/dashboardCli.css">
+    <link rel="stylesheet" href="../css/especie.css">
     <title>Dinossauros</title>
 </head>
 
 <body onload="listarEspecies()">
-    <div class="dashboardCli-container">
+    <div class="caixa-cadastro-dino">
+        <h1>CADASTRAR ESPÉCIE</h1>
+        <p>NOME</p>
+        <input id="input_nome">
+        <p>erro</p>
+        <p>NOME CIENTIFICO</p>
+        <input id="input_nome_cientifico">
+        <p>erro</p>
+        <p>dieta</p>
+        <input id="input_dieta">
+        <p id="msg_erro">erro</p>
+        <button onclick="cadastrarEspecie()">CADASTRAR</button>
+    </div>
+    <div class="especie-container">
         <aside class="menu-lateral">
             <section class="sessao-botoes-superiores">
                 <img src="../assets/logo_pequena.png" alt="logo" class="logo-menu">
@@ -38,15 +51,17 @@
         <aside class="conteudo-dashboardCli">
             <section class="conteudo-esquerdo">
                 <header class="cabecalho-esquerdo">
-                    <h1>ESPÉCIES DISPONÍVEIS</h1>
+                    <h1>ESPÉCIES</h1>
                 </header>
-                <div class="caixa-lista-dino" id="div_lista_dino">
+                <div class="caixa-lista-dino">
                     <section class="titulo-tabela">
                         <h3 class="titulos">NOME</h3>
                         <h3 class="titulos">NOME CIENTIFICO</h3>
                         <h3 class="titulos">DIETA</h3>
                         <h3 class="titulos">QUANTIDADE</h3>
                     </section>
+                    <section class="lista-dino" id="div_lista_dino"></section>
+                    <button class="botao-add-especie">ADICIONAR ESPÉCIE</button>
                 </div>
             </section>
             <section class="conteudo-direito">
@@ -94,18 +109,42 @@
         })
     }
 
+    function cadastrarEspecie() {
+        var nomeEspecieVar = input_nome.value;
+        var nomeEspecieCientificoVar = input_nome_cientifico.value;
+        var dietaEspecieVar = input_dieta.value;
 
+        if (nomeEspecieVar == '' || nomeEspecieCientificoVar == '' || dietaEspecieVar == '') {
+            msg_erro.innerHTML = 'Preencha todos os campos!'
 
-    const grafico_dinos = document.getElementById('grafico_dinos');
+            return false;
+        } else {
+            fetch('/especie/cadastrarEspecie', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeEspecie: nomeEspecieVar,
+                    nomeCientifico: nomeEspecieCientificoVar,
+                    dieta: dietaEspecieVar,
+                })
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
 
-    new Chart(grafico_dinos, {
-        type: 'doughnut',
-        data: {
-            labels: listaDino,
-            datasets: [{
-                data: [12, 19, 20,10],
-                borderWidth: 1
-            }]
+                    if (resposta.ok) {
+                        msg_erro.style.color = '#1351F1'
+                        msg_erro.innerHTML =
+                            "Cadastro realizado com sucesso!";
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                }).catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
+            return false;
         }
-    });
+    }
 </script>
