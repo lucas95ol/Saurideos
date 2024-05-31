@@ -129,7 +129,7 @@
     border-radius: 20px;
 }
 
-.lista-dino{
+.lista-dino {
     /*Tamanho*/
     width: 100%;
     height: 80%;
@@ -137,7 +137,7 @@
     border: 2px solid #000;
 }
 
-.botao-add-especie{
+.botao-add-especie {
     /*Tamanho*/
     width: 98%;
     height: 10%;
@@ -154,7 +154,7 @@
 }
 
 .titulo-tabela,
-.card-dino{
+.card-dino {
     /*Tamanho*/
     width: 100%;
     height: 40px;
@@ -165,7 +165,7 @@
 }
 
 .titulos,
-.dado-dino{
+.dado-dino {
     /*Tamanho*/
     width: 24%;
     /*Cor*/
@@ -175,7 +175,7 @@
 }
 
 
-.dado-dino{
+.dado-dino {
     /*Cor*/
     color: #000;
 }
@@ -199,16 +199,18 @@
     border-radius: 20px;
 }
 
-.conteudo-curiosidade{
+.conteudo-status {
     /*Tamanho*/
     width: 90%;
     height: 40%;
-    /*Texto*/
-    text-align: center;
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
-.titulo-curiosidade,
-.titulo-grafico{
+.titulo-status,
+.titulo-grafico {
     /*Cor*/
     color: #1351F1;
     /*Fonte*/
@@ -229,7 +231,7 @@
     border-radius: 20px;
 }
 
-.caixa-cadastro-dino{
+.caixa-cadastro-dino {
     /*Tamanho*/
     width: 50%;
     height: 90%;
@@ -239,11 +241,85 @@
     margin-top: 1%;
     margin-left: 20%;
     /*Organização de elementos filhos*/
-    display: flex;
+    display: none;
     flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    /*Borda*/
+    border: 2px solid #1351F1;
+    border-radius: 10px;
+    /*Cor*/
+    background-color: #FFF;
+    /*Detalhes*/
+    box-shadow: -9px -60px 68px 200px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -9px -60px 68px 200px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -9px -60px 68px 200px rgba(0, 0, 0, 0.75);
+}
+
+.sessao-fechar-cadastro {
+    /*Tamanho*/
+    width: 95%;
+    /*Texto*/
+    text-align: end;
+}
+
+.botao-fechar {
+    /*Borda*/
+    border: none;
+    /*Cor*/
+    background-color: transparent;
+    /*Fonte*/
+    font-size: 23px;
+    /*Detalhes*/
+    cursor: pointer;
+}
+
+.botao-fechar:hover {
+    /*Cor*/
+    color: #ff0000;
+}
+
+.titulo-cadastrar {
+    /*Tamanho*/
+    width: 100%;
+    /*Cor*/
+    color: #1351F1;
+    /*Texto*/
+    text-align: center;
+}
+
+.paragrafo-cadastrar,
+.paragrafo-erro {
+    /*Tamanho*/
+    width: 90%;
+}
+
+.paragrafo-erro{
+    /*Cor*/
+    color: #fff;
+}
+
+.input-cadastro {
+    /*Tamanho*/
+    width: 90%;
+    height: 30px;
+    /*Borda*/
+    border: none;
+    border-bottom: 2px solid #1351F1;
+}
+
+.botao-cadastrar-especie {
+    /*Tamanho*/
+    width: 90%;
+    height: 10%;
     /*Borda*/
     border: 2px solid #000;
     border-radius: 10px;
     /*Cor*/
-    background-color: #FFF;
+    background-color: #1351F1;
+    color: #FFF;
+    /*Fonte*/
+    font-size: 18px;
+    /*Detalhes*/
+    cursor: pointer;
 }

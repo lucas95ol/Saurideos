@@ -11,19 +11,22 @@
     <title>Dinossauros</title>
 </head>
 
-<body onload="listarEspecies()">
-    <div class="caixa-cadastro-dino">
-        <h1>CADASTRAR ESPÉCIE</h1>
-        <p>NOME</p>
-        <input id="input_nome">
-        <p>erro</p>
-        <p>NOME CIENTIFICO</p>
-        <input id="input_nome_cientifico">
-        <p>erro</p>
-        <p>dieta</p>
-        <input id="input_dieta">
-        <p id="msg_erro">erro</p>
-        <button onclick="cadastrarEspecie()">CADASTRAR</button>
+<body onload="retornarQtdEspecie(),listarEspecies()">
+    <div class="caixa-cadastro-dino" id="caixa_cadastro">
+        <section class="sessao-fechar-cadastro">
+            <button class="botao-fechar" onclick="fecharCadastro()">X</button>
+        </section>
+        <h1 class="titulo-cadastrar">CADASTRAR ESPÉCIE</h1>
+        <p class="paragrafo-cadastrar">NOME</p>
+        <input id="input_nome" class="input-cadastro" placeholder="Digite o nome da espécie">
+        <p id="msg_erro_nome" class="paragrafo-erro">erro</p>
+        <p class="paragrafo-cadastrar">NOME CIENTIFICO</p>
+        <input id="input_nome_cientifico" class="input-cadastro" placeholder="Digite o nome cientifico da espécie">
+        <p id="msg_erro_nome_cientifico" class="paragrafo-erro">erro</p>
+        <p class="paragrafo-cadastrar">DIETA</p>
+        <input id="input_dieta" class="input-cadastro" placeholder="Digite o tipo de dieta da espécie">
+        <p id="msg_erro" class="paragrafo-erro">erro</p>
+        <button onclick="cadastrarEspecie()" class="botao-cadastrar-especie">CADASTRAR</button>
     </div>
     <div class="especie-container">
         <aside class="menu-lateral">
@@ -61,19 +64,20 @@
                         <h3 class="titulos">QUANTIDADE</h3>
                     </section>
                     <section class="lista-dino" id="div_lista_dino"></section>
-                    <button class="botao-add-especie">ADICIONAR ESPÉCIE</button>
+                    <button class="botao-add-especie" onclick="mostrarCadastro()">ADICIONAR ESPÉCIE</button>
                 </div>
             </section>
             <section class="conteudo-direito">
                 <header class="cabecalho-direito">
-                    <h1 class="titulo-curiosidade">CURIOSIDADES</h1>
-                    <div class="conteudo-curiosidade">
-                        <p>aaaaa</p>
+                    <h1 class="titulo-status">STATUS</h1>
+                    <div class="conteudo-status">
+                        <p>Quantidade de espécies: 2</p>
+                        <p>Quantidade de Animais: 20</p>
+                        <p>Espécie com mais Animais: T-rex</p>
                     </div>
                 </header>
                 <div class="caixa-grafico">
-                    <h1 class="titulo-grafico">GRÁFICO</h1>
-                    <canvas id="grafico_dinos" class="grafico"></canvas>
+                    <h1 class="titulo-grafico">DISTRITOS</h1>
                 </div>
             </section>
         </aside>
@@ -83,6 +87,7 @@
 </html>
 <script>
     const listaDino = [];
+    const listaQtd = [];
 
     function listarEspecies() {
         fetch("/especie/listarEspecie", {
@@ -90,15 +95,20 @@
         }).then(function (resposta) {
             resposta.json().then((especie) => {
                 especie.forEach((especie) => {
-                    listaDino.push(especie.nomeEspecie);
+                    var qtd = 0;
 
+                    for(let indiceQtd = 0; indiceQtd < listaQtd.length; indiceQtd++){
+                        if(especie.nomeEspecie == listaDino[indiceQtd]){
+                            qtd = listaQtd[indiceQtd];
+                        }
+                    }
 
                     div_lista_dino.innerHTML += `
                     <section class="card-dino">
                         <span class="dado-dino">${especie.nomeEspecie}</span>
                         <span class="dado-dino">${especie.nomeCientifico}</span>
                         <span class="dado-dino">${especie.dieta}</span>
-                        <span class="dado-dino">4</span>
+                        <span class="dado-dino">${qtd}</span>
                     </section>
                     `;
                 }).catch(function (resposta) {
@@ -109,13 +119,51 @@
         })
     }
 
+    function retornarQtdEspecie(){
+        fetch("/dinossauro/retornarQtdPorEspecie",{
+            method: "GET"
+        }).then(function (resposta){
+            resposta.json().then((dinossauro) => {
+                dinossauro.forEach((dinossauro) => {
+                    listaDino.push(dinossauro.nomeEspecie);
+                    listaQtd.push(dinossauro.qtdEspecie);
+                })
+            })
+        })
+    }
+
+
+    function fecharCadastro(){
+        caixa_cadastro.style.display = 'none';
+    }
+
+    function mostrarCadastro(){
+        caixa_cadastro.style.display = 'flex';
+    }
+
     function cadastrarEspecie() {
         var nomeEspecieVar = input_nome.value;
         var nomeEspecieCientificoVar = input_nome_cientifico.value;
         var dietaEspecieVar = input_dieta.value;
 
         if (nomeEspecieVar == '' || nomeEspecieCientificoVar == '' || dietaEspecieVar == '') {
-            msg_erro.innerHTML = 'Preencha todos os campos!'
+            msg_erro.innerHTML = 'Preencha todos os campos!';
+            msg_erro.style.color = '#ff0000';
+
+            return false;
+        } else if(nomeEspecieVar.length < 3){
+            msg_erro_nome.innerHTML = 'Por favor, digite um nome válido!';
+            msg_erro_nome.style.color = '#ff0000';
+
+            return false;
+        } else if(nomeEspecieCientificoVar.length < 3){
+            msg_erro_nome_cientifico.innerHTML = 'Por favor, digite um nome cientifico válido!';
+            msg_erro_nome_cientifico.style.color = '#ff0000';
+
+            return false;
+        } else if(dietaEspecieVar.length < 3){
+            msg_erro.innerHTML = 'Por favor, digite uma dieta válida!';
+            msg_erro.style.color = '#ff0000';
 
             return false;
         } else {

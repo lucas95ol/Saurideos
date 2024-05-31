@@ -11,7 +11,7 @@
     <title>Dinossauros</title>
 </head>
 
-<body onload="listarEspecies()">
+<body onload="retornarQtdEspecie(), listarEspecies()">
     <div class="dashboardCli-container">
         <aside class="menu-lateral">
             <section class="sessao-botoes-superiores">
@@ -68,6 +68,7 @@
 </html>
 <script>
     const listaDino = [];
+    const listaQtd = [];
 
     function listarEspecies() {
         fetch("/especie/listarEspecie", {
@@ -75,15 +76,20 @@
         }).then(function (resposta) {
             resposta.json().then((especie) => {
                 especie.forEach((especie) => {
-                    listaDino.push(especie.nomeEspecie);
+                    var qtd = 0;
 
+                    for(let indiceQtd = 0; indiceQtd < listaQtd.length; indiceQtd++){
+                        if(especie.nomeEspecie == listaDino[indiceQtd]){
+                            qtd = listaQtd[indiceQtd];
+                        }
+                    }
 
                     div_lista_dino.innerHTML += `
                     <section class="card-dino">
                         <span class="dado-dino">${especie.nomeEspecie}</span>
                         <span class="dado-dino">${especie.nomeCientifico}</span>
                         <span class="dado-dino">${especie.dieta}</span>
-                        <span class="dado-dino">4</span>
+                        <span class="dado-dino">${qtd}</span>
                     </section>
                     `;
                 }).catch(function (resposta) {
@@ -91,6 +97,19 @@
                 });
             }
             )
+        })
+    }
+
+    function retornarQtdEspecie(){
+        fetch("/dinossauro/retornarQtdPorEspecie",{
+            method: "GET"
+        }).then(function (resposta){
+            resposta.json().then((dinossauro) => {
+                dinossauro.forEach((dinossauro) => {
+                    listaDino.push(dinossauro.nomeEspecie);
+                    listaQtd.push(dinossauro.qtdEspecie);
+                })
+            })
         })
     }
 
@@ -103,7 +122,7 @@
         data: {
             labels: listaDino,
             datasets: [{
-                data: [12, 19, 20,10],
+                data: listaQtd,
                 borderWidth: 1
             }]
         }
