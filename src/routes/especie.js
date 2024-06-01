@@ -7,6 +7,10 @@ router.get("/listarEspecie", function (req, res){
     especieController.listarEspecie(req, res);
 });
 
+router.get("/listarNomeEspecie", function (req, res){
+    especieController.listarNomeEspecie(req, res);
+});
+
 router.post("/cadastrarEspecie", function(req, res){
     especieController.cadastrarEspecie(req, res);
 });
