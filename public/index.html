@@ -1,82 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AquaTech | Página Inicial</title>
-
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/index.css">
+  <title>Saurideos</title>
 </head>
 
 <body>
-    <div class="header">
-      <div class="container">
-        <h1 class="titulo">AquaTech</h1>
-        <ul class="navbar">
-          <li class="agora">
-            <a href="#">Inicial</a>
-          </li>
-          <li>
-            <a href="simulador.html">Simulador</a>
-          </li>
-          <li>|</li>
-          <li>
-            <a href="login.html">Login</a>
-          </li>
-          <li>
-            <a href="cadastro.html">Cadastro</a>
-          </li>
-        </ul>
-      </div>
+  <div class="index-container">
+    <header class="cabecalho">
+      <section class="sessao-logo">
+        <img src="./assets/logo_pequena.png" class="logo-pequena" alt="logo">
+        <span class="logo-nome">SAURIDEOS</span>
+      </section>
+      <section class="sessao-botoes">
+        <button class="botao-cabecalho">Inicio</button>
+        <button class="botao-cabecalho">Parque</button>
+        <button class="botao-cabecalho">Instituição</button>
+      </section>
+      <section class="sessao-cadastro-login">
+        <button class="botao-cabecalho" onclick="navegar('./login.html')">Entrar</button>
+        <button class="botao-cabecalho" onclick="navegar('./cadastro.html')">Cadastrar</button>
+      </section>
+    </header>
+    <div class="conteudo-inicio">
+      <section class="caixa-bem-vindo">
+        <h3 class="sub-titulo-inicio">Seja bem-vindos ao</h3>
+        <h1 class="titulo-saurideos">SAURIDEOS</h1>
+        <p class="texto-inicio">
+          Bem-vindo ao nosso site, convidamos você a se cadastrar para ganhar um convite gratuito em comemoração a
+          inauguração do nosso parque!
+        </p>
+        <button class="botao-mais-info">MAIS INFORMAÇÕES</button>
+      </section>
     </div>
-  
-    <div class="banner">
-      <div class="container">
-        <p>Preservando <span>hoje</span> para existirem <span>amanhã</span>.</p>
-      </div>
-    </div>
-  
-    <div class="social">
-      <div class="container">
-        <div class="boxes">
-          <div class="box">
-            <img src="assets/imgs/planet-earth_color.png">
-            <h4>Missão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/lightbulb_color.png">
-            <h4>Visão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/growth_color.png">
-            <h4>Valores</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
+    <div class="conteudo-parque">
+      <h1 class="titulo-parque">Nosso Parque</h1>
+      <section class="caixa-parque">
+        <div class="conteudo-esquero">
+          <p class="texto-parque">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
-      </div>
+        <div class="conteudo-direito">
+          <img src="./assets/parque.png" alt="Imagem do parque" class="imagem-parque">
+        </div>
+      </section>
     </div>
-  
-    <div class="footer">
-      <div class="container">
-        <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
-        <span class="version">v1.0.0</span>
-      </div>
-    </div>
-  </body>
+  </div>
+</body>
 
 </html>
+<script>
+
+  function navegar(tela){
+    window.location = tela;
+  }
+
+</script>

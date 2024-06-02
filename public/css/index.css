@@ -1,0 +1,201 @@
+*{
+    /*Espaçamento*/
+    padding: 0px;
+    margin: 0px;
+    /*Detalhes*/
+    overflow: hidden;
+}
+
+.index-container{
+    /*Tamanho*/
+    width: 100vw;
+    height: 100vh;
+    /*Borda*/
+    border: 2px solid black;
+    /*Detalhes*/
+    overflow-y: scroll;
+}
+
+.cabecalho {
+    /*Tamanho*/
+    width: 100%;
+    height: 10%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: space-between;
+    /*Borda*/
+    border-bottom: 2px solid #000;
+}
+
+.sessao-logo {
+    /*Tamanho*/
+    width: 20%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.logo-pequena {
+    /*Tamanho*/
+    width: 25%;
+}
+
+.logo-nome {
+    /*Fonte*/
+    font-size: 23px;
+}
+
+.sessao-botoes {
+    /*Tamanho*/
+    width: 50%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.botao-cabecalho {
+    /*Tamanho*/
+    width: 30%;
+    /*Borda*/
+    border: none;
+    /*Cor*/
+    background-color: transparent;
+    /*Fonte*/
+    font-size: 20px;
+    /*Detalhes*/
+    cursor: pointer;
+}
+
+.botao-cabecalho:hover {
+    /*Cor*/
+    color: #1351F1;
+}
+
+.sessao-cadastro-login {
+    /*Tamanho*/
+    width: 25%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.conteudo-inicio{
+    /*Tamanho*/
+    width: 100%;
+    height: 100%;
+    /*Imagem*/
+    background-image: url('../assets/imagemFundo.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+
+.caixa-bem-vindo{
+    /*Tamanho*/
+    width: 40%;
+    height: 60%;
+    /*Espaçamento*/
+    padding-left: 20px;
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /*Borda*/
+    border: 2px solid #1351F1;
+    border-right: none;
+    border-radius: 20px;
+    /*Cor*/
+    background-color: #FFF;
+    /*Detalhes*/
+    opacity: 0.9;
+}
+
+.sub-titulo-inicio{
+    /*Fonte*/
+    font-size: 25px;
+}
+
+.titulo-saurideos{
+    /*Cor*/
+    color: #1351F1;
+    /*Fonte*/
+    font-size: 60px;
+}
+
+.texto-inicio{
+    /*Fonte*/
+    font-size: 25px;
+}
+
+.botao-mais-info{
+    /*Tamanho*/
+    width: 90%;
+    height: 15%;
+    /*Borda*/
+    border: 2px solid #000;
+    border-radius: 10px;
+    /*Cor*/
+    background-color: #1351F1;
+    color: #FFF;
+    /*Fonte*/
+    font-size: 20px;
+    /*Detalhes*/
+    opacity: 1;
+    cursor: pointer;
+}
+
+.conteudo-parque{
+    /*Tamanho*/
+    width: 100%;
+    height: 100%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    /*Borda*/
+    border: 2px solid #000;
+}
+
+.caixa-parque{
+    /*Tamanho*/
+    width: 100%;
+    height: 70%;
+    /*Organização de elementos filhos*/
+    display: flex;
+}
+
+.titulo-parque{
+    /*Cor*/
+    color: #1351F1;
+    /*Fonte*/
+    font-size: 30px;
+}
+
+.conteudo-esquero,
+.conteudo-direito{
+    /*Tamanho*/
+    width: 50%;
+    height: 100%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.texto-parque{
+    /*Tamanho*/
+    width: 60%;
+    /*Fonte*/
+    font-size: 20px;
+}
+
+.imagem-parque{
+    /*Tamanho*/
+    width: 90%;
+}
