@@ -2,6 +2,8 @@
     /*Espaçamento*/
     margin: 0px;
     padding: 0px;
+    /*Fonte*/
+    font-family: "Cabin", sans-serif;
     /*Detalhes*/
     overflow: hidden;
 }
@@ -119,7 +121,7 @@
     justify-content: space-evenly;
 }
 
-.input{
+.input {
     /*Tamanho*/
     height: 25px;
     /*Borda*/
@@ -132,7 +134,7 @@
     color: #fff;
 }
 
-.botao-cadastro{
+.botao-cadastro {
     /*Tamanho*/
     width: 40%;
     height: 12%;

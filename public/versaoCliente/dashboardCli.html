@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="./assets/logo_pequena.png" type="imagem/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../css/dashboardCli.css">
@@ -16,16 +19,16 @@
         <aside class="menu-lateral">
             <section class="sessao-botoes-superiores">
                 <img src="../assets/logo_pequena.png" alt="logo" class="logo-menu">
-                <button class="botao-menu">
+                <button class="botao-menu" onclick="navegar('./home.html')">
                     <span class="material-symbols-outlined">Home</span>
                 </button>
-                <button class="botao-menu" onclick="navegar('./dashboardCli.html')">
+                <button class="botao-menu">
                     <span class="material-symbols-outlined icone-dna">Genetics</span>
                 </button>
-                <button class="botao-menu">
+                <button class="botao-menu" onclick="navegar('./loja.html')">
                     <span class="material-symbols-outlined">Shop</span>
                 </button>
-                <button class="botao-menu">
+                <button class="botao-menu" onclick="navegar('./contato.html')">
                     <span class="material-symbols-outlined">Perm_Phone_Msg</span>
                 </button>
             </section>
@@ -67,6 +70,10 @@
 
 </html>
 <script>
+    function navegar(tela) {
+        window.location = tela;
+    }
+
     const listaDino = [];
     const listaQtd = [];
 
@@ -78,8 +85,8 @@
                 especie.forEach((especie) => {
                     var qtd = 0;
 
-                    for(let indiceQtd = 0; indiceQtd < listaQtd.length; indiceQtd++){
-                        if(especie.nomeEspecie == listaDino[indiceQtd]){
+                    for (let indiceQtd = 0; indiceQtd < listaQtd.length; indiceQtd++) {
+                        if (especie.nomeEspecie == listaDino[indiceQtd]) {
                             qtd = listaQtd[indiceQtd];
                         }
                     }
@@ -100,10 +107,10 @@
         })
     }
 
-    function retornarQtdEspecie(){
-        fetch("/dinossauro/retornarQtdPorEspecie",{
+    function retornarQtdEspecie() {
+        fetch("/dinossauro/retornarQtdPorEspecie", {
             method: "GET"
-        }).then(function (resposta){
+        }).then(function (resposta) {
             resposta.json().then((dinossauro) => {
                 dinossauro.forEach((dinossauro) => {
                     listaDino.push(dinossauro.nomeEspecie);

@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./assets/logo_pequena.png" type="imagem/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../css/contato.css">
     <title>Contato</title>
 </head>
+
 <body>
     <div class="contato-container">
         <aside class="menu-lateral">
             <section class="sessao-botoes-superiores">
                 <img src="../assets/logo_pequena.png" alt="logo" class="logo-menu">
-                <button class="botao-menu">
+                <button class="botao-menu" onclick="navegar('./home.html')">
                     <span class="material-symbols-outlined">Home</span>
                 </button>
                 <button class="botao-menu" onclick="navegar('./dashboardCli.html')">
                     <span class="material-symbols-outlined">Genetics</span>
                 </button>
-                <button class="botao-menu">
+                <button class="botao-menu" onclick="navegar('./loja.html')">
                     <span class="material-symbols-outlined">Shop</span>
                 </button>
                 <button class="botao-menu">
@@ -48,4 +53,10 @@
         </aside>
     </div>
 </body>
+
 </html>
+<script>
+    function navegar(tela) {
+        window.location = tela;
+    }
+</script>

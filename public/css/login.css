@@ -2,6 +2,8 @@
     /*Espaçamento*/
     margin: 0px;
     padding: 0px;
+    /*Fonte*/
+    font-family: "Cabin", sans-serif;
     /*Detalhes*/
     overflow: hidden;
 }
@@ -139,7 +141,7 @@
     cursor: pointer;
 }
 
-.link-cadastre-se{
+.link-cadastre-se {
     /*Color*/
     color: #1351F1;
     /*Detalhes*/

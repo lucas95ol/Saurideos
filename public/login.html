@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./js/sessao.js"></script>
+    <link rel="icon" href="./assets/logo_pequena.png" type="imagem/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap"
+    rel="stylesheet">
     <link rel="stylesheet" href="./css/login.css">
     <title>Login</title>
 </head>
@@ -17,13 +22,13 @@
                 <span class="logo-nome">SAURIDEOS</span>
             </section>
             <section class="sessao-botoes">
-                <button class="botao-cabecalho">Inicio</button>
-                <button class="botao-cabecalho">Parque</button>
-                <button class="botao-cabecalho">Instituição</button>
+                <button class="botao-cabecalho" onclick="navegar('./index.html')">Inicio</button>
+                <button class="botao-cabecalho" onclick="navegar('./index.html')">Parque</button>
+                <button class="botao-cabecalho"onclick="navegar('./index.html')">Instituição</button>
             </section>
             <section class="sessao-cadastro-login">
                 <button class="botao-cabecalho">Entrar</button>
-                <button class="botao-cabecalho">Cadastrar</button>
+                <button class="botao-cabecalho" onclick="navegar('./cadastro.html')">Cadastrar</button>
             </section>
         </header>
         <div class="conteudo-login">
@@ -39,7 +44,7 @@
                 <span class="msg-erro" id="erro_geral">erro</span>
                 <button class="botao-entrar" onclick="entrar()">ENTRAR</button>
                 <span>Não possui conta?</span>
-                <span class="link-cadastre-se">Cadastre-se</span>
+                <span class="link-cadastre-se" onclick="navegar('./cadastro.html')">Cadastre-se</span>
             </section>
         </div>
     </div>
@@ -47,6 +52,10 @@
 
 </html>
 <script>
+    function navegar(tela) {
+    window.location = tela;
+  }
+
     function entrar() {
         var emailVar = input_email.value;
         var senhaVar = input_senha.value;

@@ -16,7 +16,7 @@
             <section class="sessao-botoes-superiores">
                 <img src="../assets/logo_pequena.png" alt="logo" class="logo-menu">
                 <button class="botao-menu">
-                    <span class="material-symbols-outlined">Home</span>
+                    <span class="material-symbols-outlined" onclick="navegar('./home.html')">Home</span>
                 </button>
                 <button class="botao-menu" onclick="navegar('./dashboardCli.html')">
                     <span class="material-symbols-outlined">Genetics</span>
@@ -24,7 +24,7 @@
                 <button class="botao-menu">
                     <span class="material-symbols-outlined icone-loja">Shop</span>
                 </button>
-                <button class="botao-menu">
+                <button class="botao-menu" onclick="navegar('./contato.html')">
                     <span class="material-symbols-outlined">Perm_Phone_Msg</span>
                 </button>
             </section>
@@ -75,3 +75,9 @@
 </body>
 
 </html>
+
+<script>
+    function navegar(tela) {
+        window.location = tela;
+    }
+</script>
