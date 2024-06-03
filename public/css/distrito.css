@@ -292,7 +292,7 @@
     margin-top: 1%;
     margin-left: 20%;
     /*Organização de elementos filhos*/
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;

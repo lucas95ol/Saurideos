@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="icon" href="./assets/logo_pequena.png" type="imagem/png">
+    <link rel="icon" href="../assets/logo_pequena.png" type="imagem/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
@@ -14,7 +14,7 @@
     <title>Dinossauros</title>
 </head>
 
-<body onload="retornarQtdEspecie(), listarEspecies()">
+<body onload="chamarFuncoes()">
     <div class="dashboardCli-container">
         <aside class="menu-lateral">
             <section class="sessao-botoes-superiores">
@@ -56,7 +56,7 @@
                 <header class="cabecalho-direito">
                     <h1 class="titulo-curiosidade">CURIOSIDADES</h1>
                     <div class="conteudo-curiosidade">
-                        <p>aaaaa</p>
+                        <p id="p_curiosidade"></p>
                     </div>
                 </header>
                 <div class="caixa-grafico">
@@ -70,15 +70,24 @@
 
 </html>
 <script>
+
+    function chamarFuncoes(){
+        retornarQtdEspecie()
+            .then(listarEspecies)
+            .then(criarGrafico)
+            .then(consultarCuriosidades)
+            .catch(error => console.error(error));
+    }
+
     function navegar(tela) {
         window.location = tela;
     }
 
-    const listaDino = [];
-    const listaQtd = [];
+    var listaDino = [];
+    var listaQtd = [];
 
     function listarEspecies() {
-        fetch("/especie/listarEspecie", {
+        return fetch("/especie/listarEspecie", {
             method: "GET",
         }).then(function (resposta) {
             resposta.json().then((especie) => {
@@ -104,11 +113,11 @@
                 });
             }
             )
-        })
+        });
     }
 
     function retornarQtdEspecie() {
-        fetch("/dinossauro/retornarQtdPorEspecie", {
+        return fetch("/dinossauro/retornarQtdPorEspecie", {
             method: "GET"
         }).then(function (resposta) {
             resposta.json().then((dinossauro) => {
@@ -117,21 +126,42 @@
                     listaQtd.push(dinossauro.qtdEspecie);
                 })
             })
-        })
+        });
     }
 
+    var listaConteudo = [];
 
+    function consultarCuriosidades(){
+        fetch("/curiosidade/consultarCuriosidade", {
+            method: "GET"
+        }).then(function (resposta) {
+            resposta.json().then((curiosidade) => {
+                curiosidade.forEach((curiosidade) => {
+                    listaConteudo.push(curiosidade.conteudo);
+                    console.log(curiosidade.conteudo);
+                })
 
-    const grafico_dinos = document.getElementById('grafico_dinos');
+                p_curiosidade.innerHTML = listaConteudo[0];
+            })
+        });
+    }
 
-    new Chart(grafico_dinos, {
+    function criarGrafico(){
+        const grafico_dinos = document.getElementById('grafico_dinos');
+
+        let myChart = new Chart(grafico_dinos, {
         type: 'doughnut',
+        options: {
+            responsive: true,
+        },
         data: {
             labels: listaDino,
             datasets: [{
                 data: listaQtd,
                 borderWidth: 1
             }]
-        }
-    });
+        } 
+        });
+    }
+
 </script>
