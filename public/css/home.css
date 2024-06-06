@@ -73,7 +73,7 @@
 }
 
 .botao-menu:hover,
-.icone-casa{
+.icone-casa {
     /*Cor*/
     color: #1351F1;
 }
@@ -109,7 +109,7 @@
     color: #1351F1;
 }
 
-.saudacao{
+.saudacao {
     /*Espaçamento*/
     margin-left: 5px;
 }
@@ -150,24 +150,24 @@
 }
 
 .mensagem,
-.mensagem-digitada{
+.mensagem-digitada {
     /*Espaçamento*/
     padding: 5px;
 }
 
-.mensagem-digitada{
+.mensagem-digitada {
     /*Organização de elementos filhos*/
     display: flex;
     flex-direction: column;
     align-items: end;
 }
 
-.conteudo-msg{
+.conteudo-msg {
     /*Espaçamento*/
     margin-left: 10px;
 }
 
-.conteudo-msg-digitada{
+.conteudo-msg-digitada {
     /*Espaçamento*/
     margin-right: 10px;
 }
@@ -200,12 +200,13 @@
     cursor: pointer;
 }
 
-.botao-enviar-msg:hover{
+.botao-enviar-msg:hover {
     /*Cor*/
     color: #1351F1;
 }
 
-.sessao-perfil {
+.sessao-perfil,
+.sessao-alterar-perfil {
     /*Tamanho*/
     width: 26%;
     height: 97%;
@@ -218,7 +219,11 @@
     border-radius: 20px;
 }
 
-.caixa-informacoes{
+.sessao-alterar-perfil {
+    display: none;
+}
+
+.caixa-informacoes {
     /*Tamanho*/
     width: 90%;
     height: 70%;
@@ -228,7 +233,7 @@
     justify-content: space-evenly;
 }
 
-.botao-alterar{
+.botao-alterar {
     /*Tamanho*/
     width: 90%;
     height: 10%;
@@ -242,4 +247,36 @@
     font-size: 20px;
     /*Detalhes*/
     cursor: pointer;
+}
+
+.caixa-botoes {
+    /*Tamanho*/
+    width: 100%;
+    height: 10%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.botao-confirmar,
+.botao-cancelar {
+    /*Tamanho*/
+    width: 40%;
+    /*Cor*/
+    color: #FFF;
+    /*Borda*/
+    border: 2px solid #000;
+    border-radius: 10px;
+    /*Detalhes*/
+    cursor: pointer;
+}
+
+.botao-confirmar {
+    /*Cor*/
+    background-color: #008000;
+}
+
+.botao-cancelar {
+    /*Cor*/
+    background-color: #ff0000;
 }

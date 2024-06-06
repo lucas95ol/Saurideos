@@ -2,6 +2,8 @@
     /*Espaçamento*/
     margin: 0px;
     padding: 0px;
+    /*Fonte*/
+    font-family: "Cabin", sans-serif;
     /*Detalhes*/
     overflow: hidden;
 }

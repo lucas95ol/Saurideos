@@ -1,3 +1,4 @@
+const { query } = require("express");
 var usuarioModel = require("../models/usuarioModel");
 
 function autenticar(req, res) {
@@ -23,7 +24,8 @@ function autenticar(req, res) {
                             id: resultadoAutenticar[0].idUsuario,
                             email: resultadoAutenticar[0].email,
                             nome: resultadoAutenticar[0].nome,
-                            senha: resultadoAutenticar[0].senha
+                            senha: resultadoAutenticar[0].senha,
+                            fkEspecie: resultadoAutenticar[0].fkEspecieFavorita
                         });
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
@@ -76,8 +78,47 @@ function cadastrar(req, res) {
     }
 }
 
+function retornarFkEspecie(req, res){
+    var idUsuario = req.query.idUsuario;
+
+    usuarioModel.retornarFkEspecie(idUsuario).then(function (resultado) {
+        if (resultado.length > 0) {
+          res.status(200).json(resultado);
+        } else {
+          res.status(204).send("Nenhum resultado encontrado!")
+        }
+      }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      });
+}
+
+function alterarDados(req, res){
+    var nome = req.body.nome;
+    var email = req.body.email;
+    var fkEspecie = req.body.fkEspecie;
+    var idUsuario = req.query.idUsuario;
+
+    usuarioModel.alterarDados(nome, email, fkEspecie, idUsuario)
+    .then(
+        function (resultado) {
+            res.json(resultado);
+        }
+    )
+    .catch(
+        function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao realizar o post: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}
+
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    retornarFkEspecie,
+    alterarDados
 }

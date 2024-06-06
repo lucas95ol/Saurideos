@@ -7,15 +7,15 @@
     <script src="../js/sessao.js"></script>
     <script src="../js/alerta.js"></script>
     <link rel="icon" href="./assets/logo_pequena.png" type="imagem/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../css/home.css">
     <title>Home</title>
 </head>
 
-<body onload="validarSessao(), listarPublicacao()">
+<body onload="validarSessao(), listarPublicacao(), chamarFuncoes()">
     <div class="home-container">
         <aside class="menu-lateral">
             <section class="sessao-botoes-superiores">
@@ -57,19 +57,40 @@
                         </button>
                     </div>
                 </section>
-                <section class="sessao-perfil">
+                <section class="sessao-perfil" id="sessao_perfil">
                     <h1>SOBRE VOCÊ</h1>
                     <div class="caixa-informacoes">
                         <p>NOME:</p>
-                        <p id="nome_usuario_card"></p>
+                        <p id="p_nome_usuario"></p>
                         <p>E-MAIL:</p>
-                        <p id="email_usuario"></p>
+                        <p id="p_email_usuario"></p>
                         <p>QUANTIDADE DE INGRESSOS</p>
                         <p>1</p>
                         <p>DINOSSAURO FAVORITO</p>
-                        <P>T-rex</P>
+                        <p id="p_especie"></p>
                     </div>
-                    <button class="botao-alterar">ALTERAR</button>
+                    <button class="botao-alterar"
+                        onclick="mostrarSessao(sessao_perfil,sessao_mudar_informacoes)">ALTERAR</button>
+                </section>
+                <section class="sessao-alterar-perfil" id="sessao_mudar_informacoes">
+                    <h1>SOBRE VOCÊ</h1>
+                    <div class="caixa-informacoes">
+                        <p>NOME:</p>
+                        <input id="input_nome">
+                        <p>E-MAIL:</p>
+                        <input id="input_email">
+                        <p>QUANTIDADE DE INGRESSOS</p>
+                        <p>1</p>
+                        <p>DINOSSAURO FAVORITO</p>
+                        <select id="select_especie">
+                            <option value="0">Escolher dinossauro</option>
+                        </select>
+                    </div>
+                    <div class="caixa-botoes">
+                        <button class="botao-confirmar" onclick="alterarDados()">CONFIRMAR</button>
+                        <button class="botao-cancelar"
+                            onclick="mostrarSessao(sessao_mudar_informacoes, sessao_perfil)">CANCELAR</button>
+                    </div>
                 </section>
             </div>
         </aside>
@@ -81,9 +102,72 @@
     var nomeUsuario = sessionStorage.NOME_USUARIO;
     var emailUsuario = sessionStorage.EMAIL_USUARIO;
     var idUsuario = sessionStorage.ID_USUARIO;
+    var fkEspecie = sessionStorage.FK_ESPECIE;
+
+    var listaEspecie = [];
 
     function navegar(tela) {
         window.location = tela;
+    }
+
+    function mostrarSessao(sessaoSumir, sessaoAparecer) {
+        sessaoSumir.style.display = 'none';
+        sessaoAparecer.style.display = 'flex';
+    }
+
+    function chamarFuncoes() {
+        listarEspecie()
+            .then(() => construirCaixaAlterar())
+            .catch(error => console.error(error));
+    }
+
+    function retornarFkEspecie() {
+        return fetch(`/usuarios/retornarFkEspecie?idUsuario=${idUsuario}`, {
+            method: 'GET'
+        }).then(function (resposta) {
+            resposta.json().then((usuario) => {
+                fkEspecie = usuario.fkEspecieFavorita;
+                console.log(usuario.fkEspecieFavorita);
+            })
+        });
+    }
+
+    function construirCaixaAlterar() {
+        p_nome_usuario.innerHTML = nomeUsuario;
+        p_email_usuario.innerHTML = emailUsuario;
+        input_nome.value = nomeUsuario;
+        input_email.value = emailUsuario;
+
+        console.log(fkEspecie);
+
+        if (fkEspecie == 0) {
+            p_especie.innerHTML = 'Nenhum dinossauro escolhido';
+        } else {
+            for (let indiceEspecie = 0; indiceEspecie < listaEspecie.length; indiceEspecie++) {
+                if (listaEspecie[indiceEspecie].idEspecie == fkEspecie) {
+                    p_especie.innerHTML = listaEspecie[indiceEspecie].nomeEspecie;
+                    console.log(listaEspecie[indiceEspecie]);
+                }
+            }
+        }
+    }
+
+    function listarEspecie() {
+        return fetch("/especie/listarNomeEspecie", {
+            method: "GET"
+        }).then(function (resposta) {
+            resposta.json().then((especie) => {
+                especie.forEach((especie) => {
+                    listaEspecie.push(especie);
+
+                    select_especie.innerHTML += `
+                    <option value="${especie.idEspecie}">${especie.nomeEspecie}</option>
+                    `;
+                }).catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+            })
+        })
     }
 
     function listarPublicacao() {
@@ -120,7 +204,7 @@
     function enviarMensagem() {
         let mensagem = input_mensagem.value;
 
-        var corpo = {
+        var publicacao = {
             conteudo: mensagem,
             fkUsuario: idUsuario
         }
@@ -136,7 +220,7 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(corpo)
+            body: JSON.stringify(publicacao)
         }).then(function (resposta) {
 
             console.log("resposta: ", resposta);
@@ -152,8 +236,47 @@
             console.log(`#ERRO: ${resposta}`);
         });
 
-        return false;
-
         input_mensagem.value = '';
+        return false;
+    }
+
+    function alterarDados() {
+        var idEspecie = select_especie.value;
+        var nomeVar = input_nome.value;
+        var emailVar = input_email.value;
+
+        fkEspecie = idEspecie;
+        sessionStorage.FK_ESPECIE = idEspecie;
+
+        fetch(`/usuarios/alterarDados?idUsuario=${idUsuario}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: nomeVar,
+                email: emailVar,
+                fkEspecie: fkEspecie
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                console.log('Alteração feita !')
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+
+            sessionStorage.NOME_USUARIO = nomeVar;
+            sessionStorage.EMAIL_USUARIO = emailVar;
+            nomeUsuario = nomeVar;
+            emailUsuario = emailVar;
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+
+        mostrarSessao(sessao_mudar_informacoes, sessao_perfil);
+        construirCaixaAlterar();
     }
 </script>

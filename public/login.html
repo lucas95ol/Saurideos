@@ -96,11 +96,12 @@
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.FK_ESPECIE = json.fkEspecie;
 
 
                     setTimeout(function () {
-                         window.location = "./versaoCliente/home.html";
-                    }, 1000); // apenas para exibir o loading
+                        window.location = "./versaoCliente/home.html";
+                    }, 500); // apenas para exibir o loading
 
                 });
 
