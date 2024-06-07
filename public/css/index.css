@@ -12,8 +12,6 @@
     /*Tamanho*/
     width: 100vw;
     height: 100vh;
-    /*Borda*/
-    border: 2px solid black;
     /*Detalhes*/
     overflow-y: scroll;
 }
@@ -154,7 +152,7 @@
 .conteudo-parque{
     /*Tamanho*/
     width: 100%;
-    height: 100%;
+    height: 150vh;
     /*Organização de elementos filhos*/
     display: flex;
     flex-direction: column;
@@ -176,7 +174,9 @@
     /*Cor*/
     color: #1351F1;
     /*Fonte*/
-    font-size: 30px;
+    font-size: 40px;
+    /*Detalhes*/
+    overflow: visible;
 }
 
 .conteudo-esquero,
@@ -200,4 +200,33 @@
 .imagem-parque{
     /*Tamanho*/
     width: 90%;
+}
+
+.sessao-dinos-famosos{
+    /*Tamanho*/
+    width: 100%;
+    height: 50%;
+    /*Organização de elemento filhos*/
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.caixa-dinossauro{
+    /*Tamanho*/
+    width: 20%;
+    height: 90%;
+    /*Borda*/
+    border: 2px solid #1351F1;
+    border-radius: 10px;
+    /*Cor*/
+    color: #1351F1;
+    /*Texto*/
+    text-align: center;
+}
+
+.imagem-dino{
+    /*Tamanho*/
+    width: 100%;
+    /*Espaçamento*/
+    margin-bottom: 10px;
 }
