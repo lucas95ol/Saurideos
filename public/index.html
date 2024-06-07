@@ -22,8 +22,8 @@
       </section>
       <section class="sessao-botoes">
         <button class="botao-cabecalho">Inicio</button>
-        <button class="botao-cabecalho">Parque</button>
-        <button class="botao-cabecalho">Sobre</button>
+        <button class="botao-cabecalho" onclick="navegar('#parque')">Parque</button>
+        <button class="botao-cabecalho" onclick="navegar('#sobre')">Sobre</button>
       </section>
       <section class="sessao-cadastro-login">
         <button class="botao-cabecalho" onclick="navegar('./login.html')">Entrar</button>
@@ -41,7 +41,7 @@
         <button class="botao-mais-info">MAIS INFORMAÇÕES</button>
       </section>
     </div>
-    <div class="conteudo-parque">
+    <div id="parque" class="conteudo-parque">
       <h1 class="titulo-parque">Parque</h1>
       <section class="caixa-parque">
         <div class="conteudo-esquero">
@@ -79,7 +79,7 @@
         </div>
       </section>
     </div>
-    <div class="conteudo-sobre">
+    <div class="conteudo-sobre" id="sobre">
       <h1 class="titulo-saurideos">Sobre</h1>
       <p>Site que simula o um sistema do parque, com o cliente podendo ver os dinossauros 
         disponíveis e o administrador pode adicionar dinossauros, espécies e cuidar deles.
@@ -96,6 +96,10 @@
 
 </html>
 <script>
+
+  function irSessao(sessao){
+   window.location = document.getElementById(sessao); 
+  }
 
   function navegar(tela) {
     window.location = tela;
