@@ -5,13 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="../assets/logo_pequena.png" type="imagem/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../css/distrito.css">
     <title>Distritos</title>
 </head>
 
-<body onload="listarDinossauro(), listarEspecie()">
+<body onload="chamarFuncoes()">
     <div class="caixa-cadastro-dino" id="caixa_cadastro">
         <section class="sessao-fechar-cadastro">
             <button class="botao-fechar" onclick="fecharCadastro()">X</button>
@@ -38,14 +41,8 @@
         <aside class="menu-lateral">
             <section class="sessao-botoes-superiores">
                 <img src="../assets/logo_pequena.png" alt="logo" class="logo-menu">
-                <button class="botao-menu">
-                    <span class="material-symbols-outlined">Home</span>
-                </button>
-                <button class="botao-menu" onclick="navegar('./dashboardCli.html')">
+                <button class="botao-menu" onclick="navegar('./dashboarEspecie.html')">
                     <span class="material-symbols-outlined icone-dna">Genetics</span>
-                </button>
-                <button class="botao-menu">
-                    <span class="material-symbols-outlined">Shop</span>
                 </button>
                 <button class="botao-menu">
                     <span class="material-symbols-outlined">Perm_Phone_Msg</span>
@@ -60,12 +57,15 @@
         <aside class="conteudo-dashboardCli">
             <section class="conteudo-esquerdo">
                 <header class="cabecalho-esquerdo">
-                    <h1>DISTRITO</h1>
+                    <button class="botao-voltar" onclick="navegar()">
+                        <span class="material-symbols-outlined">Arrow_Back</span>
+                    </button>
+                    <h1 id="h1_header" class="titulo-cabecalho">DISTRITO</h1>
                 </header>
                 <div class="caixa-lista-dino" id="div_lista_dino">
                     <section class="titulo-tabela">
                         <h3 class="titulos">NOME</h3>
-                        <h3 class="titulos">ESPECIE</h3>
+                        <h3 class="titulos">ESPÉCIE</h3>
                         <h3 class="titulos">DIETA</h3>
                         <h3 class="titulos">SAÚDE</h3>
                         <button class="botao-adicionar" onclick="mostrarCadastro()">ADICIONAR</h3>
@@ -101,32 +101,55 @@
 
 </html>
 <script>
+    h1_header.innerHTML = sessionStorage.NOME_DISTRITO;
+    
     const listaId = [];
+    const listaSaude = [0, 0, 0];
+
     var fkDistrito = sessionStorage.FK_DISTRITO;
 
-    function fecharCadastro(){
+    function navegar(){
+        window.location = './especie.html';
+    }
+
+    function fecharCadastro() {
         caixa_cadastro.style.display = 'none';
     }
 
-    function mostrarCadastro(){
+    function mostrarCadastro() {
         caixa_cadastro.style.display = 'flex';
+    }
+
+    function chamarFuncoes() {
+        listarDinossauro()
+            .then(listarEspecie)
+            .then(construirGrafico)
+            .catch(error => console.error(error));
     }
 
     function listarDinossauro() {
 
-        fetch(`/dinossauro/listarDinossauro?fkDistrito=${fkDistrito}`, {
+        return fetch(`/dinossauro/listarDinossauro?fkDistrito=${fkDistrito}`, {
             method: "GET",
         }).then(function (resposta) {
             resposta.json().then((dinossauro) => {
                 dinossauro.forEach((dinossauro) => {
                     listaId.push(dinossauro.idDinossauro)
 
-                    var cor = 'green';
+                    var cor = 'sem cor';
 
                     if (dinossauro.saude < 40) {
                         cor = 'red';
+
+                        listaSaude[2] += 1;
                     } else if (dinossauro.saude < 70) {
                         cor = 'yellow';
+
+                        listaSaude[1] += 1;
+                    } else {
+                        cor = 'green';
+
+                        listaSaude[0] += 1;
                     }
 
                     div_lista_dino.innerHTML += `
@@ -135,7 +158,9 @@
                         <span class="dado-dino">${dinossauro.especie}</span>
                         <span class="dado-dino">${dinossauro.dieta}</span>
                         <span class="dado-dino">${dinossauro.saude}</span>
-                        <button class="botao-alimentar">ALIMENTAR</button>
+                        <button class="botao-alimentar" onclick="alimentarDinossauro(${dinossauro.saude}, ${dinossauro.idDinossauro})">
+                            ALIMENTAR
+                        </button>
                     </section>
                     `;
                 }).catch(function (resposta) {
@@ -143,11 +168,12 @@
                 });
             }
             )
+            console.log("funcionei")
         })
     }
 
-    function listarEspecie(){
-        fetch("/especie/listarNomeEspecie",{
+    function listarEspecie() {
+        return fetch("/especie/listarNomeEspecie", {
             method: "GET"
         }).then(function (resposta) {
             resposta.json().then((especie) => {
@@ -163,7 +189,7 @@
         })
     }
 
-    function cadastrarDinossauro(){
+    function cadastrarDinossauro() {
         var nomeVar = input_nome.value;
         var saudeVar = Number(input_saude.value);
         var dtNascimentoVar = input_data.value;
@@ -171,48 +197,82 @@
 
 
         fetch('/dinossauro/cadastrarDinossauro', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    nome: nomeVar,
-                    saude: saudeVar,
-                    dtNascimento: dtNascimentoVar,
-                    fkEspecie: fkEspecieVar,
-                    fkDistrito: fkDistrito
-                })
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nome: nomeVar,
+                saude: saudeVar,
+                dtNascimento: dtNascimentoVar,
+                fkEspecie: fkEspecieVar,
+                fkDistrito: fkDistrito
             })
-                .then(function (resposta) {
-                    console.log("resposta: ", resposta);
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
 
-                    if (resposta.ok) {
-                        msg_erro.style.color = '#1351F1'
-                        msg_erro.innerHTML =
-                            "Cadastro realizado com sucesso!";
-                    } else {
-                        throw "Houve um erro ao tentar realizar o cadastro!";
-                    }
-                }).catch(function (resposta) {
-                    console.log(`#ERRO: ${resposta}`);
-                });
+                if (resposta.ok) {
+                    msg_erro.style.color = '#1351F1'
+                    msg_erro.innerHTML =
+                        "Cadastro realizado com sucesso!";
 
-            return false;
-            listarDinossauro();
+                    window.location = "./distrito.html";
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            }).catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+    }
+
+    function construirGrafico() {
+        const grafico_dinos = document.getElementById('grafico_dinos');
+
+        let myChart = new Chart(grafico_dinos, {
+            type: 'doughnut',
+            data: {
+                labels: ['boa saúde', 'em observação', 'saúde crítica'],
+                datasets: [{
+                    data: listaSaude,
+                    borderWidth: 1
+                }]
+            }
+        });
+    }
+
+    function alimentarDinossauro(numeroSaude, idDinossauro){
+        var saude = 0;
+
+        if(numeroSaude + 10 > 100){
+            saude = 100;
+        } else {
+            saude = numeroSaude + 10;
         }
 
 
+        fetch(`/dinossauro/alimentarDinossauro?idDinossauro=${idDinossauro}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                saude: saude,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                console.log('Alteração feita !')
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
 
-    // const grafico_dinos = document.getElementById('grafico_dinos');
-
-    // new Chart(grafico_dinos, {
-    //     type: 'doughnut',
-    //     data: {
-    //         labels: listaDino,
-    //         datasets: [{
-    //             data: listaQtd,
-    //             borderWidth: 1
-    //         }]
-    //     }
-    // });
+            window.location = './distrito.html';
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    }
 </script>

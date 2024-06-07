@@ -66,8 +66,29 @@ function cadastrarDinossauro(req, res){
     }
 }
 
+function alimentarDinossauro(req, res){
+  var saude = req.body.saude;
+  var idDinossauro = req.query.idDinossauro;
+
+  dinossauroModel.alimentarDinossauro(saude, idDinossauro)
+  .then(
+      function (resultado) {
+          res.json(resultado);
+      }
+  )
+  .catch(
+      function (erro) {
+          console.log(erro);
+          console.log("Houve um erro ao realizar o post: ", erro.sqlMessage);
+          res.status(500).json(erro.sqlMessage);
+      }
+  );
+}
+
+
 module.exports = {
     retornarQtdPorEspecie,
     listarDinossauro,
-    cadastrarDinossauro
+    cadastrarDinossauro,
+    alimentarDinossauro
 }

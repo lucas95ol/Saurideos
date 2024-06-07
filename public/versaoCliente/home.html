@@ -117,7 +117,7 @@
 
     function chamarFuncoes() {
         listarEspecie()
-            .then(() => construirCaixaAlterar())
+            .then(construirCaixaAlterar)
             .catch(error => console.error(error));
     }
 
@@ -138,12 +138,10 @@
         input_nome.value = nomeUsuario;
         input_email.value = emailUsuario;
 
-        console.log(fkEspecie);
-
-        if (fkEspecie == 0) {
+        if (fkEspecie == 'null') {
             p_especie.innerHTML = 'Nenhum dinossauro escolhido';
         } else {
-            for (let indiceEspecie = 0; indiceEspecie < listaEspecie.length; indiceEspecie++) {
+            for(let indiceEspecie = 0; indiceEspecie < listaEspecie.length; indiceEspecie++) {
                 if (listaEspecie[indiceEspecie].idEspecie == fkEspecie) {
                     p_especie.innerHTML = listaEspecie[indiceEspecie].nomeEspecie;
                     console.log(listaEspecie[indiceEspecie]);
@@ -158,7 +156,7 @@
         }).then(function (resposta) {
             resposta.json().then((especie) => {
                 especie.forEach((especie) => {
-                    listaEspecie.push(especie);ss
+                    listaEspecie.push(especie);
 
                     select_especie.innerHTML += `
                     <option value="${especie.idEspecie}">${especie.nomeEspecie}</option>

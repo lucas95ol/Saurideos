@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="../assets/logo_pequena.png" type="imagem/png">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../css/especie.css">
     <title>Dinossauros</title>
 </head>
 
-<body onload="retornarQtdEspecie(),listarEspecies()">
+<body onload="chamarFuncoes()">
     <div class="caixa-cadastro-dino" id="caixa_cadastro">
         <section class="sessao-fechar-cadastro">
             <button class="botao-fechar" onclick="fecharCadastro()">X</button>
@@ -33,13 +34,7 @@
             <section class="sessao-botoes-superiores">
                 <img src="../assets/logo_pequena.png" alt="logo" class="logo-menu">
                 <button class="botao-menu">
-                    <span class="material-symbols-outlined">Home</span>
-                </button>
-                <button class="botao-menu" onclick="navegar('./dashboardCli.html')">
                     <span class="material-symbols-outlined icone-dna">Genetics</span>
-                </button>
-                <button class="botao-menu">
-                    <span class="material-symbols-outlined">Shop</span>
                 </button>
                 <button class="botao-menu">
                     <span class="material-symbols-outlined">Perm_Phone_Msg</span>
@@ -74,23 +69,23 @@
                 </header>
                 <div class="caixa-grafico">
                     <h1 class="titulo-grafico">DISTRITOS</h1>
-                    <button class="botao-distrito" onclick="navegar('./distrito.html', 1)">
+                    <button class="botao-distrito" onclick="navegar('./distrito.html', 1, 'DISTRITO HERBÍVORO')">
                         DISTRITO HERBÍVORO
                         <span class="material-symbols-outlined">Arrow_Forward</span>
                     </button>
-                    <button class="botao-distrito" onclick="navegar('./distrito.html', 2)">
+                    <button class="botao-distrito" onclick="navegar('./distrito.html', 2, 'DISTRITO TIRANOSSAURO')">
                         DISTRITO TIRANOSSAURO
                         <span class="material-symbols-outlined">Arrow_Forward</span>
                     </button>
-                    <button class="botao-distrito" onclick="navegar('./distrito.html', 3)">
+                    <button class="botao-distrito" onclick="navegar('./distrito.html', 3, 'DISTRITO CARNÍVORO')">
                         DISTRITO CARNÍVORO
                         <span class="material-symbols-outlined">Arrow_Forward</span>
                     </button>
-                    <button class="botao-distrito" onclick="navegar('./distrito.html', 4)">
+                    <button class="botao-distrito" onclick="navegar('./distrito.html', 4, 'DISTRITO VELOCIRAPTOR')">
                         DISTRITO VELOCIRAPTOR
                         <span class="material-symbols-outlined">Arrow_Forward</span>
                     </button>
-                    <button class="botao-distrito" onclick="navegar('./distrito.html', 5)">
+                    <button class="botao-distrito" onclick="navegar('./distrito.html', 5, 'DISTRITO AQUÁTICO')">
                         DISTRITO AQUÁTICO
                         <span class="material-symbols-outlined">Arrow_Forward</span>
                     </button>
@@ -106,9 +101,18 @@
     const listaQtd = [];
 
     let qtdAnimais = 0;
+    let maiorQtd = 0;
+    var especieMaisAnimais = '';
+
+    function chamarFuncoes(){
+        retornarQtdEspecie()
+        .then(listarEspecies)
+        .then(mostrarStatus)
+        .catch(error => console.error(error));
+    }
 
     function listarEspecies() {
-        fetch("/especie/listarEspecie", {
+         return fetch("/especie/listarEspecie", {
             method: "GET",
         }).then(function (resposta) {
             resposta.json().then((especie) => {
@@ -138,7 +142,7 @@
     }
 
     function retornarQtdEspecie(){
-        fetch("/dinossauro/retornarQtdPorEspecie",{
+         return fetch("/dinossauro/retornarQtdPorEspecie",{
             method: "GET"
         }).then(function (resposta){
             resposta.json().then((dinossauro) => {
@@ -146,22 +150,29 @@
                     listaDino.push(dinossauro.nomeEspecie);
                     listaQtd.push(dinossauro.qtdEspecie);
 
+                    if(dinossauro.qtdEspecie > maiorQtd){
+                        maiorQtd = dinossauro.qtdEspecie;
+                        especieMaisAnimais = dinossauro.nomeEspecie;
+                    }
+
                     qtdAnimais += dinossauro.qtdEspecie;
                 })
             })
         })
-
-        conteudo_status.innerHTML = `
-            <p>Quantidade de espécies: ${listaDino.length}</p>
-            <p>Quantidade de Animais: ${qtdAnimais}</p>
-            <p>Espécie com mais Animais: T-rex</p>
-            `;
-
     }
 
-    function navegar(tela, idDistrito) {
+    function mostrarStatus(){
+        conteudo_status.innerHTML += `
+            <p>Quantidade de espécies: ${listaQtd.length}</p>
+            <p>Quantidade de Animais: ${qtdAnimais}</p>
+            <p>Espécie com mais Animais: ${especieMaisAnimais}</p>
+            `;
+    }
+
+    function navegar(tela, idDistrito, nomeDistrito) {
         window.location = tela;
         sessionStorage.FK_DISTRITO = idDistrito;
+        sessionStorage.NOME_DISTRITO = nomeDistrito;
     }
 
     function fecharCadastro(){
@@ -216,6 +227,9 @@
                         msg_erro.style.color = '#1351F1'
                         msg_erro.innerHTML =
                             "Cadastro realizado com sucesso!";
+
+
+                        window.location = "./especie.html";
                     } else {
                         throw "Houve um erro ao tentar realizar o cadastro!";
                     }

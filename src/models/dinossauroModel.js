@@ -30,8 +30,18 @@ function cadastrarDinossauro(nome, saude, dtNascimento, fkEspecie, fkDistrito){
     return database.executar(instrucaoSql);
 }
 
+function alimentarDinossauro(saude, idDinossauro){
+    var instrucaoSql = `
+    UPDATE Dinossauro SET saude = ${saude} WHERE idDinossauro = ${idDinossauro}; 
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     retornarQtdPorEspecie,
     listarDinossauro,
-    cadastrarDinossauro
+    cadastrarDinossauro,
+    alimentarDinossauro
 };

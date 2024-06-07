@@ -2,6 +2,8 @@
     /*Espaçamento*/
     margin: 0px;
     padding: 0px;
+    /*Fonte*/
+    font-family: "Cabin", sans-serif;
     /*Detalhes*/
     overflow: hidden;
 }
@@ -104,7 +106,7 @@
     height: 13%;
     /*Organização de elementos filhos*/
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     /*Borda*/
     border: 2px solid #1351F1;
@@ -113,6 +115,24 @@
     color: #1351F1;
     /*Fonte*/
     font-size: 20px;
+}
+
+.botao-voltar{
+    /*Borda*/
+    border: none;
+    /*Cor*/
+    background-color: transparent;
+    color: #1351F1;
+    /*Detalhes*/
+    cursor: pointer;
+}
+
+.titulo-cabecalho{
+    /*Tamanho*/
+    width: 90%;
+    /*Organização de elementos filhos*/
+    display: flex;
+    justify-content: center;
 }
 
 .caixa-lista-dino {

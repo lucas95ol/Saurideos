@@ -15,5 +15,8 @@ router.post('/cadastrarDinossauro', function(req, res){
     dinossauroController.cadastrarDinossauro(req, res);
 });
 
+router.put("/alimentarDinossauro", function (req, res){
+    dinossauroController.alimentarDinossauro(req, res);
+});
 
 module.exports = router;
