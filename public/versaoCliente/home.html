@@ -224,6 +224,7 @@
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
+                blog.innerHTML = '';
                 listarPublicacao();
             } else if (resposta.status == 404) {
                 window.alert("Deu 404!");
